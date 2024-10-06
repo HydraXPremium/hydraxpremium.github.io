@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Rain Effect</title>
+    <style>
+        body {
+            margin: 0;
+            height: 500vh;
+            overflow: hidden;
+            background-color: black;
+            color: #006900;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .matrix {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex; /* Use flexbox for even spacing */
+            flex-wrap: nowrap; /* Prevent wrapping */
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            animation: fall linear infinite;
+            width: 20px; /* Set a fixed width for each column */
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+
+        .title {
+    position: absolute;
+    top: 20px; /* Position at the top center */
+    left: 50%; /* Move to the middle of the screen */
+    transform: translate(-50%, 0); /* Center the title horizontally */
+    font-size: 6em; /* Adjusted size for larger text */
+    color: #006900;
+    text-shadow: 
+        0 0 5px #006900, 
+        0 0 10px #006900, 
+        0 0 15px #006900,
+        0 0 20px #006900, 
+        0 0 30px #006900; /* Glowing effect */
+    animation: glow 1.5s infinite alternate; /* Animation for glow */
+}
+
+
+        @keyframes glow {
+            0% {
+                text-shadow: 
+                    0 0 5px #006900, 
+                    0 0 10px #006900, 
+                    0 0 15px #006900,
+                    0 0 20px #006900, 
+                    0 0 30px #006900;
+            }
+            100% {
+                text-shadow: 
+                    0 0 10px #006900, 
+                    0 0 20px #006900, 
+                    0 0 30px #006900,
+                    0 0 40px #006900, 
+                    0 0 50px #006900;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="title">HydraX</div> <!-- Glowing text -->
+    <div class="matrix" id="matrix"></div>
+    
+    <script>
+        const matrix = document.getElementById('matrix');
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const numColumns = Math.floor(window.innerWidth / 20); // Calculate the number of columns based on screen width
+
+        for (let i = 0; i < numColumns; i++) {
+            const column = document.createElement('div');
+            column.className = 'column';
+            column.style.animationDuration = `${Math.random() * 3 + 2}s`; // Random fall duration
+
+            // Generate random characters for the column
+            let charString = '';
+            for (let j = 0; j < 25; j++) {
+                charString += characters[Math.floor(Math.random() * characters.length)] + '<br>';
+            }
+            column.innerHTML = charString;
+            matrix.appendChild(column);
+        }
+
+        // Adjust column widths and matrix size on window resize
+        window.addEventListener('resize', () => {
+            matrix.innerHTML = ''; // Clear the current matrix
+            const newNumColumns = Math.floor(window.innerWidth / 20); // Recalculate based on new width
+
+            for (let i = 0; i < newNumColumns; i++) {
+                const column = document.createElement('div');
+                column.className = 'column';
+                column.style.animationDuration = `${Math.random() * 3 + 2}s`; // Random fall duration
+
+                // Generate random characters for the column
+                let charString = '';
+                for (let j = 0; j < 25; j++) {
+                    charString += characters[Math.floor(Math.random() * characters.length)] + '<br>';
+                }
+                column.innerHTML = charString;
+                matrix.appendChild(column);
+            }
+        });
+    </script>
+</body>
+</html>
